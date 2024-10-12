@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WhiteLagoon.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using WhiteLagoon.Infrastructure.Data;
 namespace WhiteLagoon.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241012221144_ModifyUpdatedDateNameInVillaTable")]
+    partial class ModifyUpdatedDateNameInVillaTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,38 +61,6 @@ namespace WhiteLagoon.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Villas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "A beautiful villa located in the heart of White Lagoon.",
-                            ImageUrl = "https://placehold.co/600x400",
-                            Name = "Villa",
-                            Occupancy = 4,
-                            Price = 150000.0,
-                            Sqft = 1200
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Another villa in White Lagoon.",
-                            ImageUrl = "https://via.placeholder.com/600x400",
-                            Name = "Villa 2",
-                            Occupancy = 3,
-                            Price = 120000.0,
-                            Sqft = 1000
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "A third villa in White Lagoon.",
-                            ImageUrl = "https://via.placeholder.com/600x400",
-                            Name = "Villa 3",
-                            Occupancy = 2,
-                            Price = 90000.0,
-                            Sqft = 800
-                        });
                 });
 #pragma warning restore 612, 618
         }
