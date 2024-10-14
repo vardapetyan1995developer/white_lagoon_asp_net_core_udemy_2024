@@ -51,7 +51,7 @@ namespace WhiteLagoon.Web.Controllers
             //Villa? obj = _db.Villas.Find(villaId);
             //var villaList = _db.Villas.Where(villa => villa.Price > 50 && villa.Occupancy > 0);
 
-            if (obj == null)
+            if (obj is null)
                 return RedirectToAction("Error", "Home");
 
             return View(obj);
@@ -67,6 +67,33 @@ namespace WhiteLagoon.Web.Controllers
                 _db.SaveChanges();
 
                 return RedirectToAction("Index", "Villa");
+            }
+
+            return View();
+        }
+
+        public IActionResult Delete(int villaId)
+        {
+            Villa? obj = _db.Villas.FirstOrDefault(villa => villa.Id == villaId);
+
+            if (obj is null)
+                return RedirectToAction("Error", "Home");
+
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Villa obj)
+        {
+            Villa? objFromDb = _db.Villas.FirstOrDefault(villa => villa.Id == obj.Id);
+
+            if (objFromDb is not null)
+            {
+                _db.Villas.Remove(objFromDb);
+
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
             }
 
             return View();
