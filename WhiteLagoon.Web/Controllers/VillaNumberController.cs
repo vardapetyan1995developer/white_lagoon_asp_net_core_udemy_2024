@@ -29,7 +29,7 @@ namespace WhiteLagoon.Web.Controllers
                 Value = item.Id.ToString(),
             });
 
-            ViewData["VillaList"] = list;
+            ViewBag.VillaList = list;
 
             return View();
         }
