@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WhiteLagoon.Domain.Entities;
 using WhiteLagoon.Infrastructure.Data;
 
@@ -22,12 +23,22 @@ namespace WhiteLagoon.Web.Controllers
 
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> list = _db.Villas.ToList().Select(item => new SelectListItem
+            {
+                Text = item.Name,
+                Value = item.Id.ToString(),
+            });
+
+            ViewData["VillaList"] = list;
+
             return View();
         }
 
         [HttpPost]
         public IActionResult Create(VillaNumber obj)
         {
+            //ModelState.Remove("Villa");
+
             if (ModelState.IsValid)
             {
                 _db.VillaNumbers.Add(obj);
