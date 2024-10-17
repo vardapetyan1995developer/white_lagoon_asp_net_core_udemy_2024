@@ -69,16 +69,23 @@ namespace WhiteLagoon.Web.Controllers
             return View(obj);
         }
 
-        public IActionResult Update(int villaId)
+        public IActionResult Update(int villaNumberId)
         {
-            Villa? obj = _db.Villas.FirstOrDefault(villa => villa.Id == villaId);
-            //Villa? obj = _db.Villas.Find(villaId);
-            //var villaList = _db.Villas.Where(villa => villa.Price > 50 && villa.Occupancy > 0);
+            VillaNumberVM villaNumberVM = new()
+            {
+                VillaList = _db.Villas.ToList().Select(item => new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                }),
 
-            if (obj is null)
+                VillaNumber = _db.VillaNumbers.FirstOrDefault(villaNum => villaNum.Villa_Number == villaNumberId),
+            };
+
+            if (villaNumberVM.VillaNumber is null)
                 return RedirectToAction("Error", "Home");
 
-            return View(obj);
+            return View(villaNumberVM);
         }
 
         [HttpPost]
