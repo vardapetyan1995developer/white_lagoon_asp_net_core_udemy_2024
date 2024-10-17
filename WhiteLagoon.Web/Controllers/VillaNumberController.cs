@@ -111,33 +111,42 @@ namespace WhiteLagoon.Web.Controllers
             return View(villaNumberVM);
         }
 
-        public IActionResult Delete(int villaId)
+        public IActionResult Delete(int villaNumberId)
         {
-            Villa? obj = _db.Villas.FirstOrDefault(villa => villa.Id == villaId);
+            VillaNumberVM villaNumberVM = new()
+            {
+                VillaList = _db.Villas.ToList().Select(item => new SelectListItem
+                {
+                    Text = item.Name,
+                    Value = item.Id.ToString()
+                }),
 
-            if (obj is null)
+                VillaNumber = _db.VillaNumbers.FirstOrDefault(villaNum => villaNum.Villa_Number == villaNumberId),
+            };
+
+            if (villaNumberVM.VillaNumber is null)
                 return RedirectToAction("Error", "Home");
 
-            return View(obj);
+            return View(villaNumberVM);
         }
 
         [HttpPost]
-        public IActionResult Delete(Villa obj)
+        public IActionResult Delete(VillaNumberVM villaNumberVM)
         {
-            Villa? objFromDb = _db.Villas.FirstOrDefault(villa => villa.Id == obj.Id);
+            VillaNumber? objFromDb = _db.VillaNumbers.FirstOrDefault(villa => villa.Villa_Number == villaNumberVM.VillaNumber.Villa_Number);
 
             if (objFromDb is not null)
             {
-                _db.Villas.Remove(objFromDb);
+                _db.VillaNumbers.Remove(objFromDb);
 
                 _db.SaveChanges();
 
-                TempData["success"] = "The villa deleted successfully.";
+                TempData["success"] = "The villa number has been deleted successfully.";
 
                 return RedirectToAction("Index");
             }
 
-            TempData["error"] = "The villa could not be deleted.";
+            TempData["error"] = "The villa number could not be deleted.";
 
             return View();
         }
