@@ -8,7 +8,7 @@ namespace WhiteLagoon.Infrastructure.Extensions
     {
         public static IServiceCollection AddDependencyInjections(this IServiceCollection services)
         {
-            services.AddScoped<IVillaRepository, VillaRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }
