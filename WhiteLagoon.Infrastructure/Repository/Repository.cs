@@ -21,6 +21,11 @@ namespace WhiteLagoon.Infrastructure.Repository
             DbSet.Add(entity);
         }
 
+        public bool Any(Expression<Func<T, bool>> filter)
+        {
+            return DbSet.Any(filter);
+        }
+
         public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = DbSet;
